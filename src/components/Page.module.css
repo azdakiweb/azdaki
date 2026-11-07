@@ -1,0 +1,62 @@
+.head {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.5rem, 3vw, 2.75rem) var(--gutter);
+  background: var(--wine);
+  color: var(--paper);
+}
+/* The stage stands on the band's bottom edge at the right; on phones it gets its own row. */
+.stage {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 46%;
+  height: 100%;
+  overflow: visible;
+}
+@media (max-width: 40rem) {
+  /* A full-width row under the text, as on the other pages; the height follows the width. */
+  .head:has(.stage) { padding-bottom: calc(100vw * 200 / 640 + 0.75rem); }
+  .stage { width: 100%; height: auto; aspect-ratio: 640 / 200; }
+}
+/* The audience view and custom drawings run edge to edge: as tall as the band on wide screens, a full-width row on phones. */
+.stageAudience { width: auto; aspect-ratio: 490 / 200; }
+.stageCustom svg { display: block; width: 100%; height: 100%; }
+/* Faint curtain folds in the darker red, as on the home hero: behind the drawing only, not the title. */
+.stageFolds, .stageFolds::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='8'%3E%3Crect x='28' width='28' height='8' fill='%234b1118' fill-opacity='.2'/%3E%3C/svg%3E");
+}
+/* One more fold (56px, a light and a dark stripe) to the left, so the pattern doesn't stop at the first figure. */
+.stageFolds::before { content: ''; position: absolute; top: 0; right: 100%; bottom: 0; width: 56px; }
+@media (max-width: 40rem) {
+  /* The height follows the width, so every phone keeps the performer's head in frame. */
+  .head:has(.stageAudience) { padding-bottom: calc(100vw * 165 / 490 + 0.75rem); }
+  .stageAudience { width: 100%; height: auto; aspect-ratio: 490 / 165; overflow: hidden; }
+}
+/* A band without a drawing keeps the drawings' dark floor along its bottom edge. */
+.head:not(:has(.stage)) { padding-bottom: calc(clamp(1.5rem, 3vw, 2.75rem) + clamp(0.875rem, 1.4vw, 1.5rem)); }
+.head:not(:has(.stage))::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: clamp(0.875rem, 1.4vw, 1.5rem);
+  background: var(--wine-deep);
+}
+.head .label { position: relative; margin-bottom: 0.25rem; letter-spacing: 0; }
+.title {
+  position: relative;
+  max-width: 18ch;
+  font-size: clamp(1.875rem, 3.4vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.intro { position: relative; margin-top: 1rem; max-width: 56ch; font-size: var(--t-lg); line-height: 1.5; }
+
+.container { padding: clamp(2rem, 4vw, 3.5rem) var(--gutter) var(--section); }
+
+.tabs { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: clamp(1.25rem, 2.5vw, 2rem) var(--gutter) 0; }
+.tabsTitle { min-width: 0; font-size: clamp(1.25rem, 2.5vw, 2.375rem); line-height: 1.2; }
+.tabs > nav { flex: none; }
+.tabsCount { color: var(--wine); }

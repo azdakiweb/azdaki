@@ -1,0 +1,39 @@
+.grid { display: grid; gap: clamp(0.75rem, 1vw, 1rem); padding: clamp(1.75rem, 3.5vw, 3rem) var(--gutter) var(--section); }
+@media (min-width: 56rem) {
+  .grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+}
+
+/* Outlined blocks, as on the theatre history page, each with its icon in a wine square. */
+.panel { display: grid; gap: clamp(0.75rem, 1vw, 1rem); }
+.card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--ink);
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.icon { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; background: var(--wine); color: var(--paper); }
+.icon svg { width: 1.25rem; height: 1.25rem; }
+.cardText { display: grid; gap: 0.125rem; overflow-wrap: anywhere; line-height: 1.35; }
+.cardLabel { color: var(--muted); font-size: var(--t-xs); font-weight: 500; transition: color 0.2s var(--ease); }
+.card:hover { background: var(--wine); color: var(--paper); }
+.card:hover .cardLabel { color: var(--sand); }
+.card:hover .icon { background: var(--paper); color: var(--wine); }
+
+.socials { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(0.75rem, 1vw, 1rem); }
+.social {
+  display: grid;
+  justify-items: center;
+  gap: 0.375rem;
+  padding: 0.875rem 0.5rem;
+  border: 1px solid var(--ink);
+  font-size: var(--t-sm);
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.social svg { width: 1.5rem; height: 1.5rem; color: var(--wine); transition: color 0.2s var(--ease); }
+.social:hover { background: var(--wine); color: var(--paper); }
+.social:hover svg { color: var(--paper); }
+
+.map { min-height: 20rem; }

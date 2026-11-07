@@ -1,0 +1,207 @@
+/*
+ * Header + hero = one screen. Stage photos are busy and colourful, so they get a clean
+ * edge-to-edge rectangle of their own and no text on top. Beside them the flat wine
+ * panel is a small stage of its own: name, beams, and the figures standing on the floor.
+ */
+.hero {
+  height: calc(100vh - var(--header-h));
+  height: calc(100svh - var(--header-h));
+  min-height: 26rem;
+  background: var(--wine);
+  color: var(--paper);
+}
+
+.stage {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.media {
+  order: -1;
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--wine-deep);
+}
+.image {
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.7s var(--ease);
+}
+.image[data-active] { opacity: 1; }
+
+.mediaLink { position: absolute; inset: 0; z-index: 1; }
+.image { transition: opacity 0.7s var(--ease), transform 0.8s var(--ease); }
+.mediaLink:hover ~ .image { transform: scale(1.02); }
+
+/* The outer span follows the pointer from script; the inner one grows in on hover. */
+.badge { position: absolute; top: 0; left: 0; pointer-events: none; }
+.badge > span {
+  display: grid;
+  place-items: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: -2.75rem 0 0 -2.75rem;
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--wine);
+  font-family: var(--serif);
+  font-size: var(--t-md);
+  transform: scale(0);
+  transition: transform 0.25s var(--ease);
+}
+@media (hover: hover) {
+  .mediaLink:hover .badge > span { transform: scale(1); }
+}
+
+.panel { display: flex; flex-direction: column; min-height: 0; min-width: 0; }
+
+/* The stage: the figures stand on its bottom edge. */
+.scene {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 1.875rem var(--gutter) 0;
+  overflow: hidden;
+  border-bottom: 1px solid var(--paper);
+  /* A stage curtain: a scalloped valance along the top over faint flat folds. */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='22'%3E%3Cpath d='M0 0H56V6A28 16 0 0 1 0 6Z' fill='%234b1118'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='8'%3E%3Crect x='28' width='28' height='8' fill='%234b1118' fill-opacity='.2'/%3E%3C/svg%3E");
+  background-repeat: repeat-x, repeat;
+  background-position: top left, top left;
+}
+.tagline { margin-bottom: 0.25rem; letter-spacing: 0; }
+.name {
+  font-size: clamp(2.25rem, min(11vw, 7svh), 3.5rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.figures { display: none; flex: none; width: 100%; height: 5rem; margin-top: 0.5rem; }
+.iris { transition: transform 0.18s ease-out; }
+
+/* Blink: two lids meet at the middle of the eye, a little irregularly, twice per cycle. */
+.lidTop { animation: blinkTop 7s linear infinite; }
+.lidBottom { animation: blinkBottom 7s linear infinite; }
+@keyframes blinkTop {
+  0%, 38%, 41.5%, 92%, 95.5%, 100% { transform: translateY(0); }
+  39.5%, 94% { transform: translateY(35px); }
+}
+@keyframes blinkBottom {
+  0%, 38%, 41.5%, 92%, 95.5%, 100% { transform: translateY(0); }
+  39.5%, 94% { transform: translateY(-34px); }
+}
+/* animation-name, because the site-wide reduced-motion rule only shortens duration, which would flicker here. */
+@media (prefers-reduced-motion: reduce) {
+  .lidTop, .lidBottom { animation-name: none; }
+}
+
+.news { padding: 0.75rem var(--gutter) 0; }
+/* Reserved height keeps the photo the same size between slides. */
+.copy { min-height: 6.75rem; animation: rise 0.5s var(--ease); }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(0.4rem); }
+}
+.slideTitle {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-top: 0.35rem;
+  font-size: clamp(1.0625rem, min(5vw, 3svh), 1.75rem);
+  line-height: 1.25;
+}
+.slideTitle a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
+
+.meta { letter-spacing: 0; }
+.excerpt {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-top: 0.35rem;
+  max-width: 52ch;
+  font-size: var(--t-sm);
+  line-height: 1.45;
+}
+
+.controls {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem var(--gutter);
+}
+.counter { display: flex; align-items: baseline; gap: 0.4rem; font-family: var(--serif); font-size: 1.5rem; line-height: 1; }
+.total { font-size: var(--t-sm); }
+.buttons { display: flex; }
+.buttons button {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-left: -1px;
+  border: 1px solid var(--paper);
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.buttons button:hover { background: var(--paper); color: var(--wine); }
+.buttons svg { width: 1.25rem; height: 1.25rem; }
+
+@media (min-height: 40rem) {
+  .figures { display: block; }
+}
+@media (min-height: 48rem) {
+  .figures { height: 7.5rem; }
+}
+
+/* Without the figures nothing stands on the line, so the name needs air above it. */
+@media (max-width: 55.99rem) and (max-height: 39.99rem) {
+  .scene { padding-bottom: 0.875rem; }
+}
+
+/* Wide screens: panel beside the photo, and the stage takes the spare height. */
+@media (min-width: 56rem) {
+  .stage {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .media { order: 0; }
+  .scene { flex: 1; padding-top: clamp(2rem, 5svh, 3rem); }
+  .name { font-size: clamp(2.5rem, min(4.2vw, 8.5svh), 5rem); }
+  .tagline { margin-bottom: 0.5rem; }
+  .figures { display: block; flex: 1 1 0; height: auto; min-height: 0; margin-top: clamp(0.5rem, 2svh, 1.5rem); }
+  .news { padding-top: clamp(0.75rem, 2svh, 1.25rem); }
+  .slideTitle { font-size: clamp(1.25rem, min(1.9vw, 3.4svh), 2.25rem); }
+  .controls { padding-block: clamp(0.5rem, 1.75svh, 1.25rem); }
+  .counter { font-size: clamp(1.5rem, 3.5svh, 2.25rem); }
+}
+
+/*
+ * Phones and tablets: the whole screen is one stage. Curtain and name on top, the photo
+ * framed in the wine like a proscenium, the figures standing on its bottom edge, details below.
+ * The panel and scene dissolve so that their children can sit around the photo in one grid.
+ */
+@media (max-width: 55.99rem) {
+  /* The photo sets its own height here, so the hero is only as tall as it needs and the next section shows. */
+  .hero { height: auto; min-height: 0; }
+  .stage {
+    height: auto;
+    grid-template-rows: repeat(5, auto);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='22'%3E%3Cpath d='M0 0H56V6A28 16 0 0 1 0 6Z' fill='%234b1118'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='8'%3E%3Crect x='28' width='28' height='8' fill='%234b1118' fill-opacity='.2'/%3E%3C/svg%3E");
+    background-repeat: repeat-x, repeat;
+  }
+  .panel, .scene { display: contents; }
+  .tagline { grid-row: 1; padding: 1.875rem var(--gutter) 0; }
+  .name { grid-row: 2; padding-inline: var(--gutter); margin-bottom: 0.75rem; }
+  /* Both name their column, or the second one in the row would open an extra column. */
+  .media { order: 0; grid-area: 3 / 1; height: clamp(14rem, 42svh, 24rem); margin-inline: var(--gutter); }
+  .figures { grid-area: 3 / 1; align-self: end; z-index: 2; margin: 0; pointer-events: none; }
+  .news { grid-row: 4; }
+  .controls { grid-row: 5; }
+}

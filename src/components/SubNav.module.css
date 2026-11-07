@@ -1,0 +1,60 @@
+/* Tabs: a joined two-part switch */
+.tabs ul { display: inline-flex; }
+.tabs a {
+  display: grid;
+  place-items: center;
+  min-height: 2.75rem;
+  padding-inline: clamp(0.625rem, 2.5vw, 1.25rem);
+  margin-left: -1px;
+  border: 1px solid var(--wine);
+  color: var(--wine);
+  font-size: clamp(0.8125rem, 1.6vw, 0.9375rem);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.tabs li:first-child a { margin-left: 0; }
+.tabs a:hover, .tabs a[aria-current] { background: var(--wine); color: var(--paper); }
+
+/* Phones: stepper. Wide screens: the full numbered list. */
+.side ul { display: none; }
+
+.stepperRow { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+.current { display: grid; gap: 0.125rem; min-width: 0; }
+.count { font-family: var(--serif); font-size: var(--t-xs); line-height: 1.2; color: var(--wine); }
+/* Sized to the phone so names usually fit one line; a longer one wraps beside the arrows. */
+.currentLabel {
+  font-family: var(--serif);
+  font-size: min(4.5vw, 1.25rem);
+  line-height: 1.25;
+}
+.steps { display: flex; flex: none; }
+.step {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: -1px;
+  border: 1px solid var(--wine);
+  color: var(--wine);
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.step:hover, .step:active { background: var(--wine); color: var(--paper); }
+.step svg { width: 1.125rem; height: 1.125rem; }
+.segments { display: flex; gap: 3px; margin-top: 0.625rem; }
+.segments span { flex: 1; height: 3px; background: var(--sand); }
+.segments span[data-active] { background: var(--wine); }
+
+@media (min-width: 56rem) {
+  .stepper { display: none; }
+  .side { position: sticky; top: calc(var(--header-h) + 1.5rem); }
+  .side ul { display: block; }
+  .side li { border-top: 1px solid var(--stone); }
+  .side li:first-child { border-top-color: var(--ink); }
+  .side li:last-child { border-bottom: 1px solid var(--stone); }
+  .side a { display: flex; gap: 1rem; padding: 0.8rem 0; color: var(--muted); font-size: var(--t-sm); line-height: 1.35; }
+  .side .n { display: block; font-family: var(--serif); color: var(--wine); }
+  .side a:hover { color: var(--wine); }
+  .side a[aria-current] { padding-inline: 0.75rem; background: var(--wine); color: var(--paper); font-weight: 500; }
+  .side a[aria-current] .n { color: var(--paper); }
+}

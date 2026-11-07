@@ -1,0 +1,34 @@
+/* News -------------------------------------------------------------------- */
+.newsList { display: grid; gap: clamp(0.75rem, 1vw, 1rem); }
+.news { position: relative; display: grid; border: 1px solid var(--ink); }
+.newsImage { aspect-ratio: 8 / 5; }
+.newsImage img { transition: transform 0.6s var(--ease); }
+.news:hover .newsImage img { transform: scale(1.02); }
+.newsText { display: flex; flex-direction: column; align-items: flex-start; padding: clamp(1.25rem, 2vw, 2rem); }
+.newsDate { color: var(--wine); font-size: var(--t-sm); font-weight: 500; }
+.newsTitle { margin-top: 0.25rem; font-size: var(--t-lg); line-height: 1.25; text-wrap: wrap; }
+/* The whole card is one click target; the heading link stays the only tab stop. */
+.newsTitle a::after { content: ''; position: absolute; inset: 0; }
+.news:hover .newsTitle { color: var(--wine); }
+.newsExcerpt { margin-top: 0.5rem; margin-bottom: 1rem; max-width: 60ch; color: var(--muted); font-size: var(--t-sm); line-height: 1.5; }
+.newsMore { margin-top: auto; }
+.news:hover .newsMore { background: var(--wine); color: var(--paper); }
+@media (min-width: 40rem) {
+  .news { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+  .newsImage { aspect-ratio: auto; min-height: 15rem; }
+}
+@media (min-width: 80rem) {
+  .newsList { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .news:first-child:nth-last-child(odd) { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .news:first-child:nth-last-child(odd) .newsImage { min-height: 22rem; }
+  .news:first-child:nth-last-child(odd) .newsText { justify-content: center; }
+  .news:first-child:nth-last-child(odd) .newsTitle { font-size: var(--t-xl); line-height: 1.2; }
+  .news:first-child:nth-last-child(odd) .newsMore { margin-top: 0; }
+}
+
+/* People ------------------------------------------------------------------- */
+.person { min-width: 0; }
+.portrait { aspect-ratio: 4 / 5; }
+.personName { margin-top: 0.625rem; font-size: 1.125rem; line-height: 1.25; }
+.personRole { margin-top: 0.25rem; color: var(--wine); font-size: var(--t-sm); font-weight: 500; }
+.personBio { margin-top: 0.375rem; color: var(--muted); font-size: var(--t-xs); line-height: 1.5; }

@@ -1,0 +1,11 @@
+/* Matches the heading on the performances and gallery pages. */
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: calc(clamp(1.25rem, 2.5vw, 2rem) - clamp(2rem, 4vw, 3.5rem));
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+.title { min-width: 0; font-size: clamp(1.25rem, 2.5vw, 2.375rem); line-height: 1.2; }
+.count { color: var(--wine); }

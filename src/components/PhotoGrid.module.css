@@ -1,0 +1,25 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
+}
+.cell { min-width: 0; }
+.cell:nth-child(3n + 1) { grid-column: 1 / -1; }
+@media (min-width: 56rem) {
+  .grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  /* A repeating 7-5-5-7 rhythm instead of a uniform grid. */
+  .cell, .cell:nth-child(3n + 1) { grid-column: span 5; }
+  .cell:nth-child(4n + 1), .cell:nth-child(4n) { grid-column: span 7; }
+}
+
+.thumb { display: block; width: 100%; aspect-ratio: 8 / 5; cursor: zoom-in; }
+@media (min-width: 56rem) {
+  .thumb { aspect-ratio: auto; height: clamp(16rem, 28vw, 28rem); }
+}
+.thumb img { transition: transform 0.6s var(--ease); }
+.thumb:hover img { transform: scale(1.02); }
+
+/* A tight row of small photos, for use inside a page column. */
+.compact { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; }
+.compact .cell:nth-child(n) { grid-column: auto; }
+.compact .thumb { aspect-ratio: 1; height: auto; }

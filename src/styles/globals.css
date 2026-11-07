@@ -1,0 +1,153 @@
+:root {
+  /* Brand palette */
+  --ink: #171414;
+  --wine: #781f24;
+  --wine-deep: #4b1118;
+  --paper: #f4eee4;
+  --sand: #e8ddce;
+  --stone: #b8aea4;
+  /* Stone fails AA as text on paper, so secondary text uses this darker step. */
+  --muted: #5e544d;
+
+  /* Semantic roles */
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --fg-soft: var(--muted);
+  --accent: var(--wine);
+  --line: var(--ink);
+  --line-soft: var(--stone);
+  --focus: var(--wine);
+
+  --gutter: clamp(1.25rem, 3vw, 3rem);
+  --gap: clamp(1rem, 1.6vw, 1.5rem);
+  --section: clamp(4rem, 9vw, 9rem);
+  --header-h: 5rem;
+
+  --serif: var(--font-serif), 'Sylfaen', Georgia, serif;
+  --sans: var(--font-sans), 'Sylfaen', system-ui, sans-serif;
+
+  --t-xs: 0.8125rem;
+  --t-sm: 0.9375rem;
+  --t-md: 1.0625rem;
+  --t-lg: clamp(1.25rem, 1.6vw, 1.5rem);
+  --t-xl: clamp(1.6rem, 2.6vw, 2.5rem);
+  --t-2xl: clamp(2.2rem, 4.6vw, 4.5rem);
+  --t-3xl: clamp(2.5rem, 7.2vw, 7.5rem);
+  --t-section: clamp(1.625rem, 2.5vw, 2.375rem);
+
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: var(--t-md);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+h1, h2, h3, h4 { font-family: var(--serif); font-weight: 500; line-height: 1.12; text-wrap: balance; }
+p { text-wrap: pretty; }
+img, svg, iframe { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+::selection { background: var(--wine); color: var(--paper); }
+
+.on-dark { --focus: var(--paper); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* Layout helpers ----------------------------------------------------------- */
+.wrap { padding-inline: var(--gutter); }
+
+.skip {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--ink);
+  color: var(--paper);
+  transform: translateY(-200%);
+}
+.skip:focus { transform: none; }
+
+/* Georgian capitals (Mtavruli) with the wide tracking from the logo tagline. */
+.label {
+  font-family: var(--sans);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Shared outlined button, in the same language as the dropdowns. */
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding-inline: 1.25rem;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.arrow:hover { background: var(--accent); color: var(--paper); }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75em;
+  min-height: 3.25rem;
+  padding: 0.75rem 1.75rem;
+  background: var(--wine);
+  color: var(--paper);
+  border: 1px solid var(--wine);
+  font-weight: 500;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.btn svg { width: 1.1em; height: 1.1em; }
+.btn:hover { background: var(--wine-deep); border-color: var(--wine-deep); }
+
+/* Image surfaces show a flat tone until the file arrives. */
+.frame { position: relative; overflow: hidden; background: var(--sand); }
+.frame img { object-fit: cover; }
+
+@media (forced-colors: active) {
+  .btn { border: 1px solid ButtonText; }
+}
+
+@media print {
+  header, footer, .noprint { display: none !important; }
+}

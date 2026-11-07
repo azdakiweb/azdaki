@@ -1,0 +1,20 @@
+.card { display: block; }
+.photo { position: relative; aspect-ratio: 11 / 8; overflow: hidden; background: var(--sand); }
+.photo img { object-fit: cover; }
+.date { margin-top: 1rem; color: var(--wine); font-size: var(--t-sm); font-weight: 500; }
+.title { margin-top: 0.25rem; font-size: min(6.2vw, var(--t-xl)); line-height: 1.15; text-wrap: wrap; }
+.card:hover .title { color: var(--wine); }
+.summary {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  max-width: 52ch;
+  color: var(--muted);
+  font-size: var(--t-sm);
+  line-height: 1.5;
+}
+@media (min-width: 40rem) {
+  .title { font-size: clamp(1.25rem, 1.7vw, 1.875rem); }
+}

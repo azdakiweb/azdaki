@@ -1,0 +1,82 @@
+.sponsors {
+  padding-block: clamp(2rem, 4vw, 3.5rem);
+  border-top: 1px solid var(--ink);
+}
+/* One moving row, edge to edge: each list is at least as wide as the frame, and both slide by exactly their own width. */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  border-block: 1px solid var(--stone);
+}
+.marquee:hover .sponsorList { animation-play-state: paused; }
+.sponsorList {
+  display: flex;
+  flex: none;
+  min-width: 100%;
+  animation: sponsors 30s linear infinite;
+}
+@keyframes sponsors {
+  to { transform: translateX(-100%); }
+}
+.sponsor {
+  display: grid;
+  flex: 1 0 10rem;
+  place-items: center;
+  min-height: 5.5rem;
+  padding: 0.75rem;
+  border-right: 1px solid var(--stone);
+  color: var(--muted);
+  font-family: var(--serif);
+  font-size: var(--t-sm);
+  text-align: center;
+}
+/* Without motion: one still row that can be scrolled by hand. animation-name, because the site-wide rule only shortens durations. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee { overflow-x: auto; }
+  .sponsorList { animation-name: none; }
+  .sponsorList[aria-hidden] { display: none; }
+}
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem var(--gap);
+  padding: clamp(3rem, 6vw, 5.5rem) var(--gutter) 2rem;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.brand { grid-column: 1 / -1; }
+.mark { height: clamp(6rem, 10vw, 10rem); color: var(--paper); margin-bottom: 1.5rem; }
+.name { font-family: var(--serif); font-size: var(--t-xl); line-height: 1.15; margin-bottom: 0.5rem; }
+
+/* No wide letter spacing on the footer's small titles. */
+.main :global(.label) { letter-spacing: 0; }
+.colTitle { color: var(--stone); margin-bottom: 1rem; font-family: var(--sans); }
+.col li, .address p { padding-block: 0.2rem; }
+.col a { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 0.25em; transition: text-decoration-color 0.2s; }
+.col a:hover { text-decoration-color: currentColor; }
+.address { font-style: normal; overflow-wrap: anywhere; }
+.social { display: inline-flex; align-items: center; gap: 0.5rem; }
+.social svg { flex: none; width: 1.125rem; height: 1.125rem; }
+
+.legal {
+  grid-column: 1 / -1;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1.5rem;
+  color: var(--stone);
+  font-size: var(--t-xs);
+}
+.madeBy { display: inline-flex; align-items: center; white-space: pre-wrap; }
+.madeBy svg { flex: none; width: 1.25em; height: 1.25em; margin-right: 0.5em; }
+.credit { color: var(--paper); font-weight: 500; }
+.credit:hover { color: var(--sand); }
+
+@media (min-width: 56rem) {
+  .main { grid-template-columns: 5fr 2fr 3fr 2fr; }
+  .brand { grid-column: auto; }
+}

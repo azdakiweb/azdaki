@@ -1,0 +1,135 @@
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  padding-top: 1rem;
+  margin: 0 var(--gutter) clamp(1.5rem, 2.75vw, 2.75rem);
+  border-top: 1px solid var(--ink);
+}
+.heading { margin-right: auto; font-size: var(--t-section); }
+
+.buttons { display: flex; }
+.buttons button {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-left: -1px;
+  border: 1px solid var(--wine);
+  color: var(--wine);
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.buttons button:hover { background: var(--wine); color: var(--paper); }
+.buttons svg { width: 1.25rem; height: 1.25rem; }
+
+.band {
+  padding-block: clamp(1.25rem, 2.5vw, 2.25rem);
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* Tall 9:16 stories, all centred on the band and moved out to their places by --offset. */
+.stage {
+  --story-h: min(clamp(24rem, 66svh, 38rem), calc(72vw * 16 / 9));
+  --story-w: calc(var(--story-h) * 9 / 16);
+  position: relative;
+  height: var(--story-h);
+}
+.story {
+  --scale: calc(1 - min(var(--far), 1) * 0.22);
+  position: absolute;
+  top: 0;
+  left: calc(50% - var(--story-w) / 2);
+  width: var(--story-w);
+  height: 100%;
+  overflow: hidden;
+  background: var(--wine-deep);
+  opacity: calc(1 - min(var(--far), 3) * 0.3);
+  /* Side stories are 0.78 wide: a step per card, plus the front card's extra half-width on that side. */
+  transform: translateX(calc(var(--offset) * (var(--story-w) * 0.78 + 0.75rem) + var(--side) * var(--story-w) * 0.11)) scale(var(--scale));
+  transition: transform 0.45s var(--ease), opacity 0.45s var(--ease);
+}
+.story[data-front] { z-index: 2; }
+.photo { object-fit: cover; }
+.open { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; cursor: pointer; }
+.story[data-front] .open { cursor: zoom-in; }
+.allSide { background: var(--wine); }
+
+/* Progress bars and the album's round cover, over the front photo. */
+.top {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 3;
+  display: grid;
+  justify-items: start;
+  gap: 0.625rem;
+  padding: 0.625rem;
+  pointer-events: none;
+}
+.progress { display: flex; gap: 3px; width: 100%; }
+.segment { flex: 1; height: 3px; overflow: hidden; background: color-mix(in srgb, var(--paper) 40%, transparent); }
+.segment[data-state='done'] { background: var(--paper); }
+.fill { display: block; height: 100%; background: var(--paper); transform-origin: left; animation: storyFill linear both; }
+@keyframes storyFill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.author {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 100%;
+  padding: 0.25rem 0.75rem 0.25rem 0.25rem;
+  border-radius: 1.375rem;
+  background: color-mix(in srgb, var(--ink) 62%, transparent);
+  pointer-events: auto;
+}
+.avatar { position: relative; flex: none; width: 2rem; height: 2rem; overflow: hidden; border: 1px solid var(--paper); border-radius: 50%; }
+.avatar img { object-fit: cover; }
+/* Long album names wrap instead of being cut. */
+.authorName { min-width: 0; font-size: var(--t-xs); font-weight: 500; line-height: 1.25; overflow-wrap: anywhere; }
+
+/* The closing story, leading to the full gallery. */
+.allCard {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.25rem;
+  background: var(--wine);
+  color: var(--paper);
+  transition: background-color 0.25s var(--ease);
+}
+.allCard:hover { background: var(--wine-deep); }
+.allMark {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  height: 52%;
+  color: var(--wine-deep);
+  transform: translateX(-50%);
+  transition: color 0.25s var(--ease);
+}
+.allCard:hover .allMark { color: var(--wine); }
+.allText {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--serif);
+  font-size: var(--t-lg);
+  font-weight: 500;
+  line-height: 1.15;
+}
+.allText svg { flex: none; width: 0.9em; height: 0.9em; transition: transform 0.25s var(--ease); }
+.allCard:hover .allText svg { transform: translateX(0.25em); }
+
+/* animation-name, because the site-wide reduced-motion rule only shortens durations. */
+@media (prefers-reduced-motion: reduce) {
+  .fill { animation-name: none; }
+}

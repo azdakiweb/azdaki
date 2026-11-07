@@ -1,0 +1,74 @@
+/* In the manner of a photo profile: round album covers over a tight grid of portrait photos. */
+.feedWrap { padding: clamp(1.25rem, 2.5vw, 2rem) 0 var(--section); }
+
+.highlights {
+  display: flex;
+  gap: clamp(0.875rem, 2vw, 1.75rem);
+  padding: 0 var(--gutter) clamp(1.25rem, 2.5vw, 2rem);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.highlights::-webkit-scrollbar { display: none; }
+.highlight { display: grid; justify-items: center; gap: 0.5rem; width: clamp(4.75rem, 8vw, 6.5rem); cursor: pointer; }
+.ring {
+  display: block;
+  width: clamp(4.25rem, 7vw, 5.75rem);
+  aspect-ratio: 1;
+  padding: 3px;
+  border: 2px solid var(--stone);
+  border-radius: 50%;
+  transition: border-color 0.2s var(--ease);
+}
+.highlight:hover .ring, .highlight[aria-pressed='true'] .ring, .highlight[aria-current] .ring { border-color: var(--wine); }
+.ringPhoto, .ringAll { display: block; width: 100%; height: 100%; border-radius: 50%; }
+.ringPhoto img { object-fit: cover; }
+.ringAll { display: grid; place-items: center; background: var(--wine); color: var(--paper); }
+.ringMark { width: 62%; }
+.ringAll svg { width: 42%; height: 42%; fill: currentColor; }
+.highlightName {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: var(--t-xs);
+  line-height: 1.3;
+  text-align: center;
+}
+.highlight[aria-pressed='true'] .highlightName, .highlight[aria-current] .highlightName { color: var(--wine); font-weight: 500; }
+
+.feedVideos { display: grid; gap: 1.5rem clamp(0.5rem, 1vw, 1rem); padding-inline: var(--gutter); }
+@media (min-width: 48rem) { .feedVideos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.feedVideoTitle { margin-top: 0.625rem; font-size: var(--t-md); line-height: 1.25; }
+
+.feed { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; }
+.post { display: block; width: 100%; aspect-ratio: 4 / 5; cursor: zoom-in; }
+.post img { object-fit: cover; }
+.postAlbum {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--wine) 78%, transparent);
+  color: var(--paper);
+  font-family: var(--serif);
+  font-size: var(--t-lg);
+  line-height: 1.25;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.2s var(--ease);
+}
+@media (hover: hover) {
+  .post:hover .postAlbum { opacity: 1; }
+}
+/* Wide screens: from gutter to gutter like the other pages, with one more column so photos keep their size. */
+@media (min-width: 72rem) {
+  .feedWrap { padding-inline: var(--gutter); }
+  .highlights { padding-inline: 0; }
+  .feed { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .feedVideos { padding-inline: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.back { display: inline-flex; align-items: center; gap: 0.6em; color: var(--wine); font-size: var(--t-sm); margin-bottom: 1.5rem; }
+.back svg { width: 1.1em; height: 1.1em; flex: none; transition: transform 0.25s var(--ease); }
+.back:hover svg { transform: translateX(-0.3em); }

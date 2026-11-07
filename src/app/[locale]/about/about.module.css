@@ -1,0 +1,87 @@
+.layout { display: grid; gap: 2rem var(--gap); padding: clamp(1.5rem, 3vw, 2.5rem) var(--gutter) var(--section); }
+.aside { min-width: 0; }
+.content { min-width: 0; }
+@media (min-width: 56rem) {
+  .layout { grid-template-columns: 3fr 9fr; }
+  .content { padding-left: clamp(0rem, 3vw, 3rem); }
+}
+
+.h2 { font-size: var(--t-section); margin-bottom: clamp(1rem, 2vw, 1.75rem); }
+
+/* History: a wine panel with the mission, then icon-led outlined blocks that fit together with it. */
+.intro {
+  display: grid;
+  gap: 0.75rem clamp(2rem, 4vw, 4rem);
+  padding: clamp(1.5rem, 3vw, 2.75rem);
+  background: var(--wine);
+  color: var(--paper);
+}
+.bigYear { font-family: var(--serif); font-size: clamp(2.5rem, 4vw, 4rem); line-height: 1; }
+.lead { font-family: var(--serif); font-size: var(--t-lg); line-height: 1.4; max-width: 36em; }
+@media (min-width: 56rem) {
+  .intro { grid-template-columns: auto minmax(0, 1fr); align-items: center; }
+}
+
+.chapters {
+  display: grid;
+  gap: clamp(0.75rem, 1vw, 1rem);
+  margin-top: clamp(0.75rem, 1vw, 1rem);
+}
+.chapter { padding: clamp(1.25rem, 2vw, 2rem); border: 1px solid var(--ink); }
+.chapter svg { display: block; width: 3rem; height: 3rem; margin-bottom: 1rem; }
+.chapter h2 { font-size: var(--t-lg); line-height: 1.25; margin-bottom: 0.5rem; }
+.chapter p, .chapter ul { max-width: 62ch; font-size: var(--t-sm); line-height: 1.6; }
+.chapter li { position: relative; padding-left: 1.125rem; }
+.chapter li + li { margin-top: 0.375rem; }
+.chapter li::before {
+  content: '';
+  position: absolute;
+  top: 0.6em;
+  left: 0;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 50%;
+  background: var(--wine);
+}
+@media (min-width: 40rem) {
+  .chapters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 80rem) {
+  .chapters { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .chapter { grid-column: span 2; }
+  .chapter.wide { grid-column: span 3; }
+}
+
+/* Portrait pages */
+/* Phones: small portrait beside the name, biography below. Wide screens: portrait as a column. */
+.profile {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  grid-template-areas: 'photo head' 'bio bio';
+  align-items: center;
+  gap: 1rem;
+}
+.profilePhoto { grid-area: photo; aspect-ratio: 4 / 5; }
+.profileHead { grid-area: head; }
+.profileBio { grid-area: bio; max-width: 60ch; }
+.profile h2 { font-size: var(--t-section); }
+.profileRole { margin-top: 0.5rem; color: var(--wine); font-weight: 500; line-height: 1.35; }
+@media (min-width: 56rem) {
+  .profile {
+    grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'photo head' 'photo bio';
+    align-items: start;
+    gap: 1rem clamp(1.5rem, 3vw, 3rem);
+  }
+}
+
+/* People grids */
+.people { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem var(--gap); }
+@media (min-width: 56rem) {
+  .people { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 88rem) {
+  .people { grid-template-columns: repeat(5, 1fr); }
+}
+.group + .group { margin-top: clamp(2rem, 4vw, 3.5rem); padding-top: 1.5rem; border-top: 1px solid var(--ink); }

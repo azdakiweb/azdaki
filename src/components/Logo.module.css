@@ -1,0 +1,24 @@
+.mark,
+.wordmark {
+  display: block;
+  background: currentColor;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
+  forced-color-adjust: none;
+}
+
+.mark {
+  aspect-ratio: 255 / 305;
+  mask-image: url('/brand/mark.svg');
+  -webkit-mask-image: url('/brand/mark.svg');
+}
+
+.wordmark {
+  aspect-ratio: 200 / 95;
+  mask-image: url('/brand/wordmark.svg');
+  -webkit-mask-image: url('/brand/wordmark.svg');
+}

@@ -1,0 +1,36 @@
+.menu { position: relative; flex: none; }
+.trigger, .options a, .options button {
+  min-height: 2.75rem;
+  color: var(--wine);
+  font-size: clamp(0.8125rem, 1.6vw, 0.9375rem);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-width: 9rem;
+  padding-inline: 1rem 0.75rem;
+  border: 1px solid var(--wine);
+}
+.trigger svg { width: 1rem; height: 1rem; flex: none; transition: transform 0.2s var(--ease); }
+.trigger[aria-expanded='true'] svg { transform: rotate(180deg); }
+.trigger:hover, .trigger[aria-expanded='true'] { background: var(--wine); color: var(--paper); }
+
+.options {
+  position: absolute;
+  top: calc(100% - 1px);
+  right: 0;
+  left: 0;
+  z-index: 5;
+  border: 1px solid var(--wine);
+  background: var(--paper);
+}
+.options a, .options button { display: flex; align-items: center; width: 100%; padding-inline: 1rem; text-align: left; }
+.options a:hover, .options a[aria-current], .options button:hover, .options button[aria-pressed='true'] {
+  background: var(--wine);
+  color: var(--paper);
+}
